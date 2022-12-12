@@ -17,7 +17,7 @@ const Visualizer = (): JSX.Element => {
   const [currentPoints, setCurrentPoints] = useState<PointsInterface[]>([]);
   const [currentMaterials, setCurrentMaterials] = useState<Material[]>([]);
   const [selectedId, setSelectedId] = useState<string>("");
-  const [selectedLayerImage, setSelectedLayerImage] = useState<string>("");
+  const [selectedLayerImage, setSelectedLayerImage] = useState<string[]>([]);
 
   useEffect(() => {
     const initializeData = async () => {
@@ -36,7 +36,7 @@ const Visualizer = (): JSX.Element => {
   const handleMaterialClick = (layer: Layers) => {
     const layerImage = Object.values(layer)[0];
 
-    if (layerImage) setSelectedLayerImage(layerImage);
+    if (layerImage) setSelectedLayerImage([...selectedLayerImage, layerImage]);
   };
 
   const filteredData = useMemo(() => {
@@ -48,7 +48,7 @@ const Visualizer = (): JSX.Element => {
   const layerImage = useMemo(() => selectedLayerImage, [selectedLayerImage]);
 
   return (
-    <div className="flex min-h-[100vh] items-center justify-center ">
+    <div className="flex min-h-[100vh] items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 ">
       <div className="relative ">
         <Image
           width={1240}
@@ -59,16 +59,19 @@ const Visualizer = (): JSX.Element => {
           className="h-auto w-auto"
         />
 
-        {layerImage.length ? (
-          <Image
-            width={1240}
-            height={843}
-            src={layerImage}
-            alt="base image"
-            priority={true}
-            className="absolute top-0 left-0 z-10 h-auto w-auto"
-          />
-        ) : null}
+        {layerImage.length
+          ? layerImage.map((el) => (
+              <Image
+                key={el}
+                width={1240}
+                height={843}
+                src={el}
+                alt="base image"
+                priority={true}
+                className="absolute top-0 left-0 z-10 h-auto w-auto"
+              />
+            ))
+          : null}
 
         {displayPoints
           ? currentPoints.map((el) => (
