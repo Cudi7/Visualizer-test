@@ -1,7 +1,7 @@
 import type { PointsInterface } from "../utils/visualizer.interface";
 
 interface FingerPrintProps {
-  handleClick: () => void;
+  handleClick: (id: string) => void;
   data: PointsInterface;
 }
 
