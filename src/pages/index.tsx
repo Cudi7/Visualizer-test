@@ -1,27 +1,8 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { app, db } from "../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  // useEffect(() => {
-  //   const readData = async () => {
-  //     const querySnapshotTest = await getDocs(collection(db, "points"));
-  //     querySnapshotTest.forEach((doc) => {
-  //       console.table(`${doc.id} => ${doc.data()}`);
-  //     });
-
-  //     const querySnapshotTestTwo = await getDocs(collection(db, "materials"));
-  //     querySnapshotTestTwo.forEach((doc) => {
-  //       console.table(`${doc.id} => ${doc.data()}`);
-  //     });
-  //   };
-
-  //   readData();
-  // }, []);
-
   return (
     <>
       <Head>
@@ -32,12 +13,12 @@ const Home: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            Start <span className="text-[hsl(280,100%,70%)]">Visualizer</span>{" "}
-            Test
+            Estudio Cactus{" "}
+            <span className="text-[hsl(280,100%,70%)]">Visualizer</span> Test
           </h1>
           <div>
             <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+              className="flex max-w-xs flex-col  gap-4 rounded-xl bg-white/10 p-4  text-white hover:bg-white/20"
               href="/visualizer"
             >
               <h3 className="text-2xl font-bold">Start →</h3>
