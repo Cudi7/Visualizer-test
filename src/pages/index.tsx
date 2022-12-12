@@ -6,21 +6,21 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  useEffect(() => {
-    const readData = async () => {
-      const querySnapshotTest = await getDocs(collection(db, "points"));
-      querySnapshotTest.forEach((doc) => {
-        console.table(`${doc.id} => ${doc.data()}`);
-      });
+  // useEffect(() => {
+  //   const readData = async () => {
+  //     const querySnapshotTest = await getDocs(collection(db, "points"));
+  //     querySnapshotTest.forEach((doc) => {
+  //       console.table(`${doc.id} => ${doc.data()}`);
+  //     });
 
-      const querySnapshotTestTwo = await getDocs(collection(db, "materials"));
-      querySnapshotTestTwo.forEach((doc) => {
-        console.table(`${doc.id} => ${doc.data()}`);
-      });
-    };
+  //     const querySnapshotTestTwo = await getDocs(collection(db, "materials"));
+  //     querySnapshotTestTwo.forEach((doc) => {
+  //       console.table(`${doc.id} => ${doc.data()}`);
+  //     });
+  //   };
 
-    readData();
-  }, []);
+  //   readData();
+  // }, []);
 
   return (
     <>
@@ -32,30 +32,18 @@ const Home: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            Estudio Cactus{" "}
-            <span className="text-[hsl(280,100%,70%)]">Visualizer</span> Test
+            Start <span className="text-[hsl(280,100%,70%)]">Visualizer</span>{" "}
+            Test
           </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+          <div>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
+              href="/visualizer"
             >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
+              <h3 className="text-2xl font-bold">Start →</h3>
               <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Exercitationem, accusamus!
               </div>
             </Link>
           </div>
