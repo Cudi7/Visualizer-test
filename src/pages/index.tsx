@@ -22,10 +22,6 @@ const Home: NextPage = () => {
               href="/visualizer"
             >
               <h3 className="text-2xl font-bold">Start →</h3>
-              <div className="text-lg">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Exercitationem, accusamus!
-              </div>
             </Link>
           </div>
         </div>

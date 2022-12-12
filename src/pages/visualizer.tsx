@@ -11,6 +11,7 @@ import {
   initializeMaterials,
   initializePoints,
 } from "../utils/visualizer.init";
+import Materials from "../components/Materials";
 
 const Visualizer = (): JSX.Element => {
   const [displayPoints, setDisplayPoints] = useState<boolean>(false);
@@ -33,7 +34,9 @@ const Visualizer = (): JSX.Element => {
 
   const handlePointerClick = (id: string) => setSelectedId(id);
 
-  const handleMaterialClick = (layer: Layers) => {
+  const handleMaterialClick = (layer: Layers | undefined) => {
+    if (!layer) return;
+
     const layerImage = Object.values(layer)[0];
 
     if (layerImage) setSelectedLayerImage([...selectedLayerImage, layerImage]);
@@ -49,7 +52,7 @@ const Visualizer = (): JSX.Element => {
 
   return (
     <div className="flex min-h-[100vh] items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 ">
-      <div className="relative ">
+      <div className="relative">
         <Image
           width={1240}
           height={843}
@@ -86,24 +89,11 @@ const Visualizer = (): JSX.Element => {
       <div className="ml-2 flex flex-col gap-5">
         {filteredData.length
           ? filteredData.map((el) => (
-              <div
+              <Materials
                 key={el.id}
-                className=" flex cursor-pointer flex-col items-center rounded-lg border bg-white py-0 px-2 shadow-md hover:bg-gray-100  md:max-w-xl md:flex-row"
-                onClick={() => handleMaterialClick(el.layers)}
-              >
-                <div className="flex flex-col justify-between p-4 leading-normal">
-                  <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-600 ">
-                    {el.name}
-                  </h5>
-                </div>
-                <Image
-                  className="  rounded-lg object-cover  "
-                  src={el.materialPreview}
-                  alt={el.name}
-                  height={90}
-                  width={90}
-                />
-              </div>
+                data={el}
+                handleMaterialClick={handleMaterialClick}
+              />
             ))
           : null}
       </div>
