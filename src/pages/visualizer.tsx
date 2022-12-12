@@ -1,52 +1,41 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-import { app, db } from "../firebase/config";
+import { db } from "../firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 import FingerPrint from "../components/FingerPrint";
-
-interface PointsInterface {
-  id: string;
-  data: {
-    coordX: number;
-    coordY: number;
-    name: string;
-  };
-}
+import type { Material, PointsInterface } from "../utils/visualizer.interface";
+import {
+  initializeMaterials,
+  initializePoints,
+} from "../utils/visualizer.init";
 
 const Visualizer = (): JSX.Element => {
   const [displayPoints, setDisplayPoints] = useState<boolean>(false);
   const [currentPoints, setCurrentPoints] = useState<PointsInterface[]>([]);
+  const [currentMaterials, setCurrentMaterials] = useState<Material[]>([]);
+  const [selectedId, setSelectedId] = useState<string>("");
 
   useEffect(() => {
-    const initializePoints = async () => {
-      const querySnapshot = await getDocs(collection(db, "points"));
-
-      const points: PointsInterface[] = [];
-
-      querySnapshot.forEach((doc) => {
-        points.push({
-          id: doc.id,
-          data: {
-            coordX: doc.data().coordX,
-            coordY: doc.data().coordY,
-            name: doc.data().name,
-          },
-        });
-      });
-
-      setCurrentPoints(points);
+    const initializeData = async () => {
+      setCurrentPoints(await initializePoints());
+      setCurrentMaterials(await initializeMaterials());
     };
-    initializePoints();
+
+    initializeData();
   }, []);
 
   useEffect(() => {
-    if (currentPoints.length) setDisplayPoints(true);
-  }, [currentPoints]);
+    if (currentMaterials.length) setDisplayPoints(true);
+  }, [currentMaterials]);
 
-  const handlePointerClick = () => {
-    // alert("clicked");
-  };
+  const handlePointerClick = async (id: string) => setSelectedId(id);
+
+  const filteredData = useMemo(() => {
+    return selectedId
+      ? currentMaterials.filter((el) => el.points?.indexOf(selectedId) !== -1)
+      : [];
+  }, [currentMaterials, selectedId]);
 
   return (
     <div className="flex min-h-[100vh] items-center justify-center ">
@@ -64,10 +53,11 @@ const Visualizer = (): JSX.Element => {
               <FingerPrint
                 key={el.id}
                 handleClick={handlePointerClick}
-                data={el.data}
+                data={el}
               />
             ))
           : null}
+        {}
       </div>
     </div>
   );

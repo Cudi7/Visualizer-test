@@ -1,18 +1,16 @@
+import type { PointsInterface } from "../utils/visualizer.interface";
+
 interface FingerPrintProps {
   handleClick: () => void;
-  data: {
-    coordX: number;
-    coordY: number;
-    name: string;
-  };
+  data: PointsInterface;
 }
 
 const FingerPrint = ({ handleClick, data }: FingerPrintProps): JSX.Element => {
-  const { coordX, coordY, name } = data;
+  const { coordX, coordY } = data.data;
 
   return (
     <div
-      onClick={handleClick}
+      onClick={() => handleClick(data.id)}
       className={`border-full  cursor-pointer rounded-full bg-slate-700/30 p-1 ring-2 ring-slate-700/30 ring-offset-2  transition hover:opacity-60 active:translate-x-1`}
       style={{
         position: "absolute",
