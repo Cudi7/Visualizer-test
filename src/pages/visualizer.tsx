@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
+import type { InferGetStaticPropsType, NextPage } from "next";
 
 import FingerPrint from "../components/FingerPrint";
 import type {
@@ -13,7 +14,19 @@ import {
 } from "../utils/visualizer.init";
 import Materials from "../components/Materials";
 
-const Visualizer = (): JSX.Element => {
+export async function getStaticProps() {
+  const points: PointsInterface[] = await initializePoints();
+  const materials: Material[] = await initializeMaterials();
+
+  return {
+    props: { points, materials },
+  };
+}
+
+const Visualizer: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  points,
+  materials,
+}) => {
   const [displayPoints, setDisplayPoints] = useState<boolean>(false);
   const [currentPoints, setCurrentPoints] = useState<PointsInterface[]>([]);
   const [currentMaterials, setCurrentMaterials] = useState<Material[]>([]);
@@ -22,11 +35,11 @@ const Visualizer = (): JSX.Element => {
 
   useEffect(() => {
     const initializeData = async () => {
-      setCurrentPoints(await initializePoints());
-      setCurrentMaterials(await initializeMaterials());
+      setCurrentPoints(points);
+      setCurrentMaterials(materials);
     };
     initializeData();
-  }, []);
+  }, [materials, points]);
 
   useEffect(() => {
     if (currentMaterials.length && currentPoints.length) setDisplayPoints(true);
