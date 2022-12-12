@@ -2,7 +2,11 @@ import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 
 import FingerPrint from "../components/FingerPrint";
-import type { Material, PointsInterface } from "../utils/visualizer.interface";
+import type {
+  Material,
+  PointsInterface,
+  Layers,
+} from "../utils/visualizer.interface";
 import {
   initializeMaterials,
   initializePoints,
@@ -13,13 +17,13 @@ const Visualizer = (): JSX.Element => {
   const [currentPoints, setCurrentPoints] = useState<PointsInterface[]>([]);
   const [currentMaterials, setCurrentMaterials] = useState<Material[]>([]);
   const [selectedId, setSelectedId] = useState<string>("");
+  const [selectedLayerImage, setSelectedLayerImage] = useState<string>("");
 
   useEffect(() => {
     const initializeData = async () => {
       setCurrentPoints(await initializePoints());
       setCurrentMaterials(await initializeMaterials());
     };
-
     initializeData();
   }, []);
 
@@ -29,11 +33,19 @@ const Visualizer = (): JSX.Element => {
 
   const handlePointerClick = (id: string) => setSelectedId(id);
 
+  const handleMaterialClick = (layer: Layers) => {
+    const layerImage = Object.values(layer)[0];
+
+    if (layerImage) setSelectedLayerImage(layerImage);
+  };
+
   const filteredData = useMemo(() => {
     return selectedId
       ? currentMaterials.filter((el) => el.points?.indexOf(selectedId) !== -1)
       : [];
   }, [currentMaterials, selectedId]);
+
+  const layerImage = useMemo(() => selectedLayerImage, [selectedLayerImage]);
 
   return (
     <div className="flex min-h-[100vh] items-center justify-center ">
@@ -46,6 +58,18 @@ const Visualizer = (): JSX.Element => {
           priority={true}
           className="h-auto w-auto"
         />
+
+        {layerImage.length ? (
+          <Image
+            width={1240}
+            height={843}
+            src={layerImage}
+            alt="base image"
+            priority={true}
+            className="absolute top-0 left-0 z-10 h-auto w-auto"
+          />
+        ) : null}
+
         {displayPoints
           ? currentPoints.map((el) => (
               <FingerPrint
@@ -61,7 +85,8 @@ const Visualizer = (): JSX.Element => {
           ? filteredData.map((el) => (
               <div
                 key={el.id}
-                className=" flex flex-col items-center rounded-lg border bg-white py-0 px-2 shadow-md hover:bg-gray-100  md:max-w-xl md:flex-row"
+                className=" flex cursor-pointer flex-col items-center rounded-lg border bg-white py-0 px-2 shadow-md hover:bg-gray-100  md:max-w-xl md:flex-row"
+                onClick={() => handleMaterialClick(el.layers)}
               >
                 <div className="flex flex-col justify-between p-4 leading-normal">
                   <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-600 ">
