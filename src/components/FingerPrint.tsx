@@ -13,7 +13,12 @@ const FingerPrint = ({ handleClick, data }: FingerPrintProps): JSX.Element => {
   return (
     <div
       onClick={handleClick}
-      className={`border-full absolute top-[${coordX}%] left-[${coordY}%] cursor-pointer rounded-full bg-slate-700/30 p-1 ring-2 ring-slate-700/30 ring-offset-2  transition hover:opacity-60 active:translate-x-1`}
+      className={`border-full  cursor-pointer rounded-full bg-slate-700/30 p-1 ring-2 ring-slate-700/30 ring-offset-2  transition hover:opacity-60 active:translate-x-1`}
+      style={{
+        position: "absolute",
+        top: `${coordY}%`,
+        left: `${coordX}%`,
+      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -45,7 +45,7 @@ const Visualizer = (): JSX.Element => {
   }, [currentPoints]);
 
   const handlePointerClick = () => {
-    alert("clicked");
+    // alert("clicked");
   };
 
   return (
