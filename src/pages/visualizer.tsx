@@ -68,7 +68,7 @@ const Visualizer: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     <>
       <AppBar />
       <div className="mt-10 flex min-h-[100vh] items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 ">
-        <div className="relative">
+        <div className="group relative transition">
           <Image
             width={1240}
             height={843}
@@ -102,7 +102,11 @@ const Visualizer: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               ))
             : null}
         </div>
-        <div className="ml-2 flex  w-[15rem] flex-col gap-5">
+        <div
+          className={`${
+            filteredData.length ? "flex" : "hidden"
+          } ml-2   w-[15rem] flex-col gap-5`}
+        >
           {filteredData.length
             ? filteredData.map((el) => (
                 <Materials

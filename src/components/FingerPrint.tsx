@@ -11,7 +11,7 @@ const FingerPrint = ({ handleClick, data }: FingerPrintProps): JSX.Element => {
   return (
     <div
       onClick={() => handleClick(data.id)}
-      className={`border-full z-10 cursor-pointer rounded-full bg-slate-700/30 p-1 ring-2 ring-slate-700/30 ring-offset-2  transition hover:opacity-60 active:translate-x-1`}
+      className={`border-full z-10 hidden cursor-pointer  rounded-full bg-slate-700/30 p-1 ring-2 ring-slate-700/30 ring-offset-2 transition hover:opacity-60   active:translate-x-1 group-hover:flex`}
       style={{
         position: "absolute",
         top: `${coordY}%`,
