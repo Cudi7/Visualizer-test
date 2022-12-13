@@ -13,6 +13,7 @@ import {
   initializePoints,
 } from "../utils/visualizer.init";
 import Materials from "../components/Materials";
+import AppBar from "../components/AppBar";
 
 export async function getStaticProps() {
   const points: PointsInterface[] = await initializePoints();
@@ -64,53 +65,56 @@ const Visualizer: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const layerImage = useMemo(() => selectedLayerImage, [selectedLayerImage]);
 
   return (
-    <div className="flex min-h-[100vh] items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 ">
-      <div className="relative">
-        <Image
-          width={1240}
-          height={843}
-          src={"/base.jpeg"}
-          alt="base image"
-          priority={true}
-          className="h-auto w-auto"
-        />
+    <>
+      <AppBar />
+      <div className="mt-10 flex min-h-[100vh] items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 ">
+        <div className="relative">
+          <Image
+            width={1240}
+            height={843}
+            src={"/base.jpeg"}
+            alt="base image"
+            priority={true}
+            className="h-auto w-auto"
+          />
 
-        {layerImage.length
-          ? layerImage.map((el) => (
-              <Image
-                key={el}
-                width={1240}
-                height={843}
-                src={el}
-                alt="base image"
-                priority={true}
-                className="absolute top-0 left-0 z-10 h-auto w-auto"
-              />
-            ))
-          : null}
+          {layerImage.length
+            ? layerImage.map((el) => (
+                <Image
+                  key={el}
+                  width={1240}
+                  height={843}
+                  src={el}
+                  alt="base image"
+                  priority={true}
+                  className="absolute top-0 left-0 z-10 h-auto w-auto"
+                />
+              ))
+            : null}
 
-        {displayPoints
-          ? currentPoints.map((el) => (
-              <FingerPrint
-                key={el.id}
-                handleClick={handlePointerClick}
-                data={el}
-              />
-            ))
-          : null}
+          {displayPoints
+            ? currentPoints.map((el) => (
+                <FingerPrint
+                  key={el.id}
+                  handleClick={handlePointerClick}
+                  data={el}
+                />
+              ))
+            : null}
+        </div>
+        <div className="ml-2 flex  w-[15rem] flex-col gap-5">
+          {filteredData.length
+            ? filteredData.map((el) => (
+                <Materials
+                  key={el.id}
+                  data={el}
+                  handleMaterialClick={handleMaterialClick}
+                />
+              ))
+            : null}
+        </div>
       </div>
-      <div className="ml-2 flex flex-col gap-5">
-        {filteredData.length
-          ? filteredData.map((el) => (
-              <Materials
-                key={el.id}
-                data={el}
-                handleMaterialClick={handleMaterialClick}
-              />
-            ))
-          : null}
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -12,7 +12,7 @@ const Materials = ({ handleMaterialClick, data }: MaterialsProps) => {
   return (
     <div
       key={id}
-      className=" flex cursor-pointer flex-col items-center rounded-lg border bg-white py-0 px-2 shadow-md hover:bg-gray-100  md:max-w-xl md:flex-row"
+      className=" flex cursor-pointer flex-col items-center justify-between rounded-lg border bg-white   shadow-md hover:bg-gray-100  md:max-w-xl md:flex-row"
       onClick={() => handleMaterialClick(layers)}
     >
       <div className="flex flex-col justify-between p-4 leading-normal">
@@ -21,7 +21,7 @@ const Materials = ({ handleMaterialClick, data }: MaterialsProps) => {
         </h5>
       </div>
       <Image
-        className="  rounded-lg object-cover  "
+        className="max-h-[90px] rounded-lg object-cover"
         src={materialPreview as string}
         alt={name as string}
         height={90}
